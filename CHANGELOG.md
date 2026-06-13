@@ -4,7 +4,7 @@ All notable changes to Aurora are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/), and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [1.1.0] — 2026-06-13 — "Vega"
 
 ### Added
 - **`aurora.lua.parser`**: a full recursive-descent Lua 5.3 parser (AST). Fuzzed
@@ -22,6 +22,8 @@ All notable changes to Aurora are documented here. The format follows
   statements, multiple statements per line, never touches strings/comments, and
   parenthesizes the RHS to preserve precedence.
 - The lexer now records per-token byte spans.
+
+[1.1.0]: https://github.com/AlexMelanFromRingo/aurora/releases/tag/v1.1.0
 
 ## [1.0.0] — 2026-06-13 — "Polaris"
 
