@@ -16,7 +16,7 @@ while IFS= read -r -d '' f; do
     fail=1
   fi
 done < <(find "$ROOT/overlay" "$ROOT/install" "$ROOT/registry" "$ROOT/tests" "$ROOT/tools" \
-           -name '*.lua' -print0 2>/dev/null)
+           "$ROOT/patches" -name '*.lua' -print0 2>/dev/null)
 
 if [[ $fail -eq 0 ]]; then
   echo "lint ok: $count files"
