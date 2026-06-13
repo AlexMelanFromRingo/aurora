@@ -97,12 +97,19 @@ function doc.markdown(src, opts)
   if opts.title then out[#out + 1] = "# " .. opts.title .. "\n" end
   -- leading file comment (block ending before the first line of code) as intro
   if opts.intro then out[#out + 1] = opts.intro .. "\n" end
+  -- Make a doc comment safe to drop into Markdown prose: escape '|' (kramdown
+  -- otherwise parses it as a table cell separator and mangles the line) and
+  -- keep intended line breaks as hard breaks.
+  local function mdSafe(text)
+    return (text:gsub("|", "\\|"):gsub("\n", "  \n"))
+  end
+
   local shown = 0
   for _, it in ipairs(api.items) do
     if not opts.publicOnly or it.public then
       shown = shown + 1
       out[#out + 1] = "### `" .. it.signature .. "`\n"
-      if it.doc and it.doc ~= "" then out[#out + 1] = it.doc .. "\n" end
+      if it.doc and it.doc ~= "" then out[#out + 1] = mdSafe(it.doc) .. "\n" end
     end
   end
   if shown == 0 then out[#out + 1] = "_No public functions found._\n" end

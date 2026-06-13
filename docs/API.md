@@ -56,7 +56,7 @@ parse(...) — returns table of results or (nil, reason). Prints on help/error.
 
 ### `ahttp.request(method, url, opts)`
 
-request(method, url, opts) -> response | nil, err
+request(method, url, opts) -> response \| nil, err
 
 ### `ahttp.get(url, opts)`
 
@@ -64,12 +64,12 @@ request(method, url, opts) -> response | nil, err
 
 ### `ahttp.getJSON(url, opts)`
 
-getJSON(url) -> decoded, response | nil, err
+getJSON(url) -> decoded, response \| nil, err
 
 ### `ahttp.download(url, path, opts)`
 
-download(url, path, opts) -> true | nil, err
-opts.sha256 (hex) verifies integrity; opts.onProgress(bytes) for UI.
+download(url, path, opts) -> true \| nil, err  
+opts.sha256 (hex) verifies integrity; opts.onProgress(bytes) for UI.  
 Writes atomically: temp file, verify, then rename into place.
 
 
@@ -79,12 +79,12 @@ Writes atomically: temp file, verify, then rename into place.
 
 ### `anet.encode(message)`
 
-encode(message) -> wire string. Messages are JSON objects under a magic tag
+encode(message) -> wire string. Messages are JSON objects under a magic tag  
 so unrelated modem traffic on the same port is ignored.
 
 ### `anet.decode(wire)`
 
-decode(wire) -> message | nil (nil if not an anet frame / malformed)
+decode(wire) -> message \| nil (nil if not an anet frame / malformed)
 
 ### `anet.rpcRequest(method, params, id)`
 
@@ -102,11 +102,11 @@ decode(wire) -> message | nil (nil if not an anet frame / malformed)
 
 ### `anet.recv(port, timeout)`
 
-recv(port, timeout) -> fromAddress, message | nil, "timeout"
+recv(port, timeout) -> fromAddress, message \| nil, "timeout"
 
 ### `anet.rpc.call(address, port, method, params, timeout)`
 
-call(addr, port, method, params, timeout) -> result | nil, err
+call(addr, port, method, params, timeout) -> result \| nil, err
 
 ### `anet.rpc.serve(port, handlers, opts)`
 
@@ -166,7 +166,7 @@ humanBytes(1536) -> "1.5K"
 
 ### `fsx.atomicWrite(path, data)`
 
-atomicWrite: write to <path>.tmp-<n>, fsync via close, then rename over the
+atomicWrite: write to <path>.tmp-<n>, fsync via close, then rename over the  
 target. A crash mid-write never leaves a half-written destination file.
 
 ### `fsx.exists(path)`
@@ -205,7 +205,7 @@ always use the pure-Lua path (testing / determinism)
 
 ### `semver.compare(a, b)`
 
-compare(a, b) -> -1 | 0 | 1
+compare(a, b) -> -1 \| 0 \| 1
 
 ### `semver.eq(a, b)`
 
@@ -297,7 +297,7 @@ Lua 5.4 <const>/<close> attributes — tolerated for forward compatibility.
 
 ### `gen.format(src, opts)`
 
-format(src [, opts]) -> formatted source | nil, err
+format(src [, opts]) -> formatted source \| nil, err
 
 ### `gen.fromAst(ast)`
 
@@ -319,4 +319,4 @@ extract(src) -> {items = { {name=, signature=, doc=, kind=, line=} , ... }}
 
 ### `doc.markdown(src, opts)`
 
-markdown(src, opts) -> string | nil, err
+markdown(src, opts) -> string \| nil, err

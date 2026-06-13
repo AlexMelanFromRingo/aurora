@@ -54,6 +54,12 @@ t.describe("doc.markdown", function()
   t.it("notes when there are no functions", function()
     t.expect(doc.markdown("local x = 1\nreturn x")).toContain("No public functions")
   end)
+  t.it("escapes pipes so kramdown does not parse them as tables", function()
+    -- a doc line with '|' must not break Markdown rendering on GitHub Pages
+    local md = doc.markdown("-- returns x -> a | b\nfunction M.f() end", {publicOnly = true})
+    t.expect(md).toContain("a \\| b")
+    t.expect(md:find(" a | b", 1, true)).toBeNil()
+  end)
 end)
 
 os.exit((t.run({quiet = true})))

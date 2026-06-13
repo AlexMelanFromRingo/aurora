@@ -23,7 +23,7 @@ return {
     {src="overlay/lib/argparse.lua", dst="/lib/argparse.lua", kind="overlay", sha256="e4b39b3a41983d89d1bd041c07b19fe85ef27cf5a087ac4db38cceae5c22b3d0"},
     {src="overlay/lib/aurora/analyze.lua", dst="/lib/aurora/analyze.lua", kind="overlay", sha256="9e2583befaec3a3f658cccf750c275ad8bca1437d1c069d43bb174c29f935e5b"},
     {src="overlay/lib/aurora/bundle.lua", dst="/lib/aurora/bundle.lua", kind="overlay", sha256="45976224732cf73022121ca077198a9a86d651d7d884d96c34e31d9ab4cc8a5f"},
-    {src="overlay/lib/aurora/doc.lua", dst="/lib/aurora/doc.lua", kind="overlay", sha256="0f3799c735772179d7137abd38c052510a8063c8ec7caaf38f0b7d84ebfc1a61"},
+    {src="overlay/lib/aurora/doc.lua", dst="/lib/aurora/doc.lua", kind="overlay", sha256="2441031c2b652cd6b9529313c5a3cd58c76214e0589d3c18964e9272feab6192"},
     {src="overlay/lib/aurora/fsx.lua", dst="/lib/aurora/fsx.lua", kind="overlay", sha256="3a04c046f0f8d81641ae0f6041da806f34ca508e3aed5177881cc1542449f438"},
     {src="overlay/lib/aurora/hash.lua", dst="/lib/aurora/hash.lua", kind="overlay", sha256="a1dd32c5d7716d598e469c667c8ccb23c9576fe1ffa292b6faee1010fdb82916"},
     {src="overlay/lib/aurora/lint.lua", dst="/lib/aurora/lint.lua", kind="overlay", sha256="fce06bc40fa55b5544157adcd4d64f7c4f81026d814f9a71a4d7c31311a2e321"},
