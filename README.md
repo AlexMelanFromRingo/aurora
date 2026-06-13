@@ -11,6 +11,10 @@ makes the system far more capable and pleasant to use.
 It installs *on top of* an existing OpenOS (as an overlay + a couple of targeted
 core patches), so there is nothing to re-learn and nothing to lose.
 
+📖 **Documentation site:** <https://alexmelanfromringo.github.io/aurora/> ·
+[API reference](docs/API.md) · [Architecture](docs/ARCHITECTURE.md) ·
+[Patches](docs/PATCHES.md)
+
 ---
 
 ## Highlights
