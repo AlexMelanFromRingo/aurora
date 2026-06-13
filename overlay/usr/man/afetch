@@ -1,0 +1,9 @@
+NAME
+  afetch - system summary
+
+SYNOPSIS
+  afetch
+
+DESCRIPTION
+  Prints a compact, neofetch-style summary: OS version, uptime, memory use and
+  attached hardware, beside the Aurora logo.

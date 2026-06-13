@@ -1,0 +1,37 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Lua 5.3
+        run: sudo apt-get update && sudo apt-get install -y lua5.3
+
+      - name: Lint (luac5.3 -p)
+        run: |
+          # ubuntu ships luac5.3 in the lua5.3 package on most releases;
+          # fall back to a luac shim if the versioned binary is absent.
+          command -v luac5.3 >/dev/null || sudo ln -sf "$(command -v luac)" /usr/local/bin/luac5.3 || true
+          LUAC=luac5.3 tools/lint.sh
+
+      - name: Host unit tests
+        run: tools/test.sh --no-integration
+
+      - name: Verify generated artifacts are up to date
+        run: |
+          tools/build.sh
+          if ! git diff --quiet -- install/manifest.lua registry/index.json; then
+            echo "::error::manifest/registry are stale — run tools/build.sh and commit"
+            git --no-pager diff -- install/manifest.lua registry/index.json
+            exit 1
+          fi
+
+      # The integration step needs the ocvm emulator and a PTY; it runs locally
+      # via `tools/integration.sh` and is not part of CI.

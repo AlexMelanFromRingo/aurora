@@ -1,0 +1,9 @@
+NAME
+  atest - run aurora.test suites
+
+SYNOPSIS
+  atest <suite.lua> [more.lua ...]
+
+DESCRIPTION
+  Loads each suite (which registers cases with describe/it) and runs them.
+  Exit code is non-zero if any test fails. Use -q for quiet output.
