@@ -34,7 +34,8 @@ while IFS= read -r -d '' p; do
 done < <(find "$ROOT/patches" -name '*.lua' ! -name '*.orig' -print0)
 
 # 4) wire the self-test to run at login, then halt
-cp "$ROOT/tests/integration/selftest.lua" "$INST/openos/bin/aurora-selftest.lua"
+SELFTEST="${SELFTEST:-$ROOT/tests/integration/selftest.lua}"
+cp "$SELFTEST" "$INST/openos/bin/aurora-selftest.lua"
 printf 'aurora-selftest\n' > "$INST/openos/home/.shrc"
 
 # 5) client.cfg: stock components, openos boot fs (our staged copy), data card
