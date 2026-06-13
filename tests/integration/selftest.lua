@@ -107,6 +107,15 @@ check("doc generator extracts public API", function()
   assert(md:find("M.hi(name)", 1, true) and md:find("greets", 1, true))
 end)
 
+check("sandbox isolates untrusted code", function()
+  local sandbox = require("aurora.sandbox")
+  local ok, r = sandbox.run("return 6 * 7")
+  assert(ok and r == 42)
+  -- no access to the system from inside the sandbox
+  assertEq(select(2, sandbox.eval("os.remove")), nil, "os.remove must be hidden")
+  assertEq(select(2, sandbox.eval("require")), nil, "require must be hidden")
+end)
+
 check("watch detects content changes (real fs)", function()
   local watch = require("aurora.watch")
   local fsx = require("aurora.fsx")

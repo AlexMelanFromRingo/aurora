@@ -1,0 +1,17 @@
+NAME
+  asandbox - run a Lua file in a restricted sandbox
+
+SYNOPSIS
+  asandbox [--steps=N] <file.lua> [args...]
+
+DESCRIPTION
+  Executes the file with no access to io, the filesystem, component/computer,
+  require or load. Only the pure standard library plus a safe print() is
+  available, so untrusted code can compute but cannot touch the system.
+
+OPTIONS
+  --steps=N   abort after roughly N VM instructions (stops runaway loops)
+
+EXAMPLES
+  asandbox untrusted.lua
+  asandbox --steps=1000000 compute.lua 2 3

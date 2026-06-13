@@ -4,6 +4,20 @@ All notable changes to Aurora are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/), and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+- **`aurora.sandbox` + `asandbox`**: run untrusted Lua with no access to io, the
+  filesystem, component/computer, require or load — only the pure stdlib (plus a
+  caller-injected `print` in the CLI). Optional step limit aborts runaway loops.
+- opm packages `ahash`, `awc`, `ahexdump` (registry now 7).
+- Published **package catalog** (`docs/packages.md`, auto-generated from the
+  registry) on the docs site; auto-regenerated in CI.
+
+### Fixed
+- API docs: escape `|` so GitHub Pages (kramdown) no longer splits description
+  lines like `… -> a | b` into a broken table.
+
 ## [1.3.0] — 2026-06-13 — "Sirius"
 
 ### Added

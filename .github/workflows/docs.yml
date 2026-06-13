@@ -8,6 +8,8 @@ on:
     paths:
       - "overlay/lib/**"
       - "tools/gen-apidocs.lua"
+      - "tools/gen-catalog.lua"
+      - "registry/**"
       - ".github/workflows/docs.yml"
 
 permissions:
@@ -21,15 +23,15 @@ jobs:
       - name: Install Lua 5.3
         run: sudo apt-get update && sudo apt-get install -y lua5.3
       - name: Regenerate API docs
-        run: lua5.3 tools/gen-apidocs.lua
+        run: lua5.3 tools/gen-apidocs.lua && lua5.3 tools/gen-catalog.lua
       - name: Commit if changed
         run: |
-          if git diff --quiet -- docs/API.md; then
+          if git diff --quiet -- docs/API.md docs/packages.md; then
             echo "API.md already up to date"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/API.md
+          git add docs/API.md docs/packages.md
           git commit -m "docs: regenerate API.md [skip ci]"
           git push

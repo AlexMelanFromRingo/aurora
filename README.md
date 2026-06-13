@@ -31,7 +31,7 @@ core patches), so there is nothing to re-learn and nothing to lose.
 | 🛠️ **Dev toolchain** | `acc` (compile = transpile→lint→bundle→minify), `aminify` (Lua-aware minifier), `abundle` (require-graph linker), `atpl` (compound-assignment transpiler), `alint` (**scope-aware** linter on a real Lua AST), `afmt` (AST-based code formatter), `adoc` (API-doc generator), `atest`, `arepl` |
 | 🌐 **Networking** | `ahttp` (status-checked HTTP with JSON + verified downloads), `anet` (modem messaging + JSON-RPC 2.0) |
 | 🎨 **Shell & UX** | `atheme` color themes, configurable prompt, `afetch` system summary, curated aliases |
-| 🔒 **Security & reliability** | patched `wget` (checks HTTP status, atomic, `--sha256`), `cp` crash fix, `strict` global guard, safe-remove |
+| 🔒 **Security & reliability** | patched `wget` (checks HTTP status, atomic, `--sha256`), `cp` crash fix, `strict` global guard, safe-remove, `asandbox` (run untrusted Lua with no system access) |
 | 🧰 **Libraries** | `json`, `inspect`, `class`, `argparse`, `aurora.hash` (SHA-256/CRC-32), `aurora.semver`, `aurora.fsx`, `aurora.util`, `aurora.optimize` |
 
 Every shipped Lua file is syntax-linted, every pure module is unit-tested on the
