@@ -90,6 +90,35 @@ local computer = {
 _G.component = _G.component or component
 _G.computer = _G.computer or computer
 
+-- Make `require("component")` / `require("computer")` resolve to the mocks, the
+-- way OpenOS libraries expect.
+package.loaded["component"] = _G.component
+package.loaded["computer"] = _G.computer
+
+-- Minimal host-backed `filesystem` so fsx and ahttp.download can be tested off
+-- the emulator. Backed by real host files under whatever path the test uses.
+if not package.loaded["filesystem"] then
+  local function sh(cmd) return select(3, os.execute(cmd)) == 0 end
+  local filesystem = {
+    exists = function(p)
+      local f = io.open(p, "rb")
+      if f then f:close(); return true end
+      return sh("test -e '" .. p .. "'")
+    end,
+    isDirectory = function(p) return sh("test -d '" .. p .. "'") end,
+    makeDirectory = function(p) return sh("mkdir -p '" .. p .. "'") end,
+    remove = function(p) os.remove(p); return true end,
+    list = function(p)
+      local out, h = {}, io.popen("ls -1 '" .. p .. "' 2>/dev/null")
+      if h then for line in h:lines() do out[#out + 1] = line end; h:close() end
+      local i = 0
+      return function() i = i + 1; return out[i] end
+    end,
+    concat = function(...) return table.concat({...}, "/"):gsub("//+", "/") end,
+  }
+  package.loaded["filesystem"] = filesystem
+end
+
 -- Register a fake component proxy and make it the primary of its kind.
 function M.set(kind, proxy, addr)
   addr = addr or (kind .. "-0000")
