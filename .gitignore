@@ -1,0 +1,9 @@
+# build artifacts
+/dist/
+*.tar
+*.ocpkg
+# emulator scratch
+/.itest/
+*.log
+# editor
+*.swp
