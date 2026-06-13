@@ -8,6 +8,7 @@ command -v "$LUA" >/dev/null || { echo "need $LUA" >&2; exit 127; }
 
 # Modules resolve from the overlay; the OC shim and test files from tests/.
 export LUA_PATH="$ROOT/overlay/lib/?.lua;$ROOT/overlay/lib/?/init.lua;$ROOT/tests/?.lua;$ROOT/tests/?/init.lua;;"
+export AURORA_ROOT="$ROOT"
 
 echo "== lint =="
 "$ROOT/tools/lint.sh"

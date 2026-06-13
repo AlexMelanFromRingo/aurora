@@ -1,0 +1,20 @@
+{
+  "packages": {
+    "acowsay": {
+      "description": "A tiny cowsay — prints an ASCII cow with your message",
+      "versions": {
+        "0.1.0": {
+          "deps": [],
+          "files": [
+            {
+              "path": "/bin/acowsay.lua",
+              "sha256": "b3522258818211f196baf0fd2ef81470a5b5581edfe1ff0f67319633e6c08cb4",
+              "url": "packages/acowsay/0.1.0/bin/acowsay.lua"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "registry": "aurora"
+}
