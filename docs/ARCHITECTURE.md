@@ -44,7 +44,8 @@ bin/            thin CLI front-ends; all logic lives in libraries
 lib/            json, inspect, class, argparse, ahttp, anet
 lib/aurora/     util, fsx, hash, semver, version, prompt, theme, sysinfo,
                 strict, optimize, minify, transpile, bundle, lint, test
-lib/aurora/lua/ lexer  (shared by minify + transpile = the "compiler" core)
+lib/aurora/lua/ lexer + parser  (the "compiler" core)
+lib/aurora/     ... analyze (scope-aware static analysis on the parser AST)
 lib/aurora/opm/ resolver, db, registry, init  (the package manager)
 ```
 
@@ -89,7 +90,12 @@ modules that target OpenOS can be exercised off-emulator in milliseconds. The
 emulator step then proves the same code works on the genuine platform.
 
 The minifier is additionally **fuzzed against all 127 stock OpenOS Lua files**:
-each is minified and must recompile cleanly (it does; ~27% smaller).
+each is minified and must recompile cleanly (it does; ~27% smaller). The
+**parser is fuzzed over all 168 stock + Aurora files** (every one parses); the
+**analyzer**, run across the same corpus, produces exactly one "undefined name"
+finding — a genuine latent bug in stock OpenOS's `etc/rc.d/example.lua`
+(`print(args)` references an unbound global) — which is the kind of
+false-positive-free precision a scope-aware checker should have.
 
 ## 6. Distribution
 

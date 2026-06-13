@@ -80,6 +80,20 @@ check("lint flags implicit global", function()
   assert(#f >= 1)
 end)
 
+check("parser builds an AST", function()
+  local parser = require("aurora.lua.parser")
+  local ast = parser.parse("local a = 1 + 2 * 3\nreturn a")
+  assert(ast.tag == "Block")
+  assert(ast.stmts[1].tag == "Local")
+end)
+
+check("analyzer finds undefined names", function()
+  local analyze = require("aurora.analyze")
+  local f = analyze.check("return nonexistent_thing")
+  assert(#f == 1 and f[1].message:find("undefined name"))
+  assertEq(#analyze.check("local x = 1\nreturn x"), 0, "clean code has no findings")
+end)
+
 -- ---- things that need the real OpenOS environment --------------------------
 
 check("fsx atomic write to real fs", function()

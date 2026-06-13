@@ -18,7 +18,7 @@ core patches), so there is nothing to re-learn and nothing to lose.
 | Area | What you get |
 |------|--------------|
 | 📦 **Packages** | `opm` — install/remove/update/search with semver dependency resolution and **sha256-verified, atomic** downloads from a GitHub-hosted registry |
-| 🛠️ **Dev toolchain** | `acc` (compile = transpile→lint→bundle→minify), `aminify` (Lua-aware minifier), `abundle` (require-graph linker), `atpl` (compound-assignment transpiler), `alint`, `atest`, `arepl` |
+| 🛠️ **Dev toolchain** | `acc` (compile = transpile→lint→bundle→minify), `aminify` (Lua-aware minifier), `abundle` (require-graph linker), `atpl` (compound-assignment transpiler), `alint` (**scope-aware** linter on a real Lua AST), `atest`, `arepl` |
 | 🌐 **Networking** | `ahttp` (status-checked HTTP with JSON + verified downloads), `anet` (modem messaging + JSON-RPC 2.0) |
 | 🎨 **Shell & UX** | `atheme` color themes, configurable prompt, `afetch` system summary, curated aliases |
 | 🔒 **Security & reliability** | patched `wget` (checks HTTP status, atomic, `--sha256`), `cp` crash fix, `strict` global guard, safe-remove |

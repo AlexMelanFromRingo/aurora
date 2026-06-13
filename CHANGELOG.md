@@ -4,6 +4,22 @@ All notable changes to Aurora are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/), and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+- **`aurora.lua.parser`**: a full recursive-descent Lua 5.3 parser (AST). Fuzzed
+  over all 168 stock + Aurora files — every one parses.
+- **`aurora.analyze`**: scope-aware static analysis on the AST — detects reads of
+  undefined names (typos) and unused locals. Wired into `alint`. Across the whole
+  corpus it surfaces exactly one real latent bug (`etc/rc.d/example.lua`).
+- New opm packages: `ajson`, `abase64`, `awatch`.
+
+### Changed
+- `aurora.transpile` rewritten on the lexer (token-based): handles multiline
+  statements, multiple statements per line, never touches strings/comments, and
+  parenthesizes the RHS to preserve precedence.
+- The lexer now records per-token byte spans.
+
 ## [1.0.0] — 2026-06-13 — "Polaris"
 
 First public release. A complete, tested overlay distribution for OpenOS.
