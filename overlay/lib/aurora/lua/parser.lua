@@ -281,7 +281,7 @@ function P:funcStat()
   end
   local fn = self:functionBody(line)
   if isMethod then table.insert(fn.params, 1, "self") end
-  return {tag = "Function", target = target, func = fn, line = line}
+  return {tag = "Function", target = target, func = fn, method = isMethod, line = line}
 end
 
 function P:localStat()

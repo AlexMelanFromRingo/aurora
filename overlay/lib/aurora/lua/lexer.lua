@@ -105,13 +105,18 @@ function lexer.tokenize(src, opts)
       push("string", src:sub(i, j - 1))
       i = j
 
-    -- numbers
+    -- numbers (a sign is only part of an exponent, never bare — so 1+2 lexes
+    -- as three tokens, not the number "1+2")
     elseif c:match("%d") or (c == "." and src:sub(i + 1, i + 1):match("%d")) then
       local num
       if src:sub(i, i + 1):match("^0[xX]") then
-        num = src:match("^0[xX]%x*%.?%x*[pP]?[%+%-]?%d*", i)
+        num = src:match("^0[xX]%x*%.?%x*", i)
+        local exp = src:match("^[pP][%+%-]?%d+", i + #num)
+        if exp then num = num .. exp end
       else
-        num = src:match("^%d*%.?%d*[eE]?[%+%-]?%d*", i)
+        num = src:match("^%d*%.?%d*", i)
+        local exp = src:match("^[eE][%+%-]?%d+", i + #num)
+        if exp then num = num .. exp end
       end
       push("number", num)
       i = i + #num

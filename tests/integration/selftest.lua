@@ -94,6 +94,13 @@ check("analyzer finds undefined names", function()
   assertEq(#analyze.check("local x = 1\nreturn x"), 0, "clean code has no findings")
 end)
 
+check("formatter is meaning-preserving and idempotent", function()
+  local gen = require("aurora.lua.gen")
+  local out = gen.format("if x then return 1+2*3 end")
+  assertEq(out, "if x then\n  return 1 + 2 * 3\nend\n")
+  assertEq(gen.format(out), out, "format is idempotent")
+end)
+
 -- ---- things that need the real OpenOS environment --------------------------
 
 check("fsx atomic write to real fs", function()

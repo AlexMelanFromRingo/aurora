@@ -44,7 +44,7 @@ bin/            thin CLI front-ends; all logic lives in libraries
 lib/            json, inspect, class, argparse, ahttp, anet
 lib/aurora/     util, fsx, hash, semver, version, prompt, theme, sysinfo,
                 strict, optimize, minify, transpile, bundle, lint, test
-lib/aurora/lua/ lexer + parser  (the "compiler" core)
+lib/aurora/lua/ lexer + parser + gen  (the "compiler" core; gen = AST→source)
 lib/aurora/     ... analyze (scope-aware static analysis on the parser AST)
 lib/aurora/opm/ resolver, db, registry, init  (the package manager)
 ```
@@ -96,6 +96,11 @@ each is minified and must recompile cleanly (it does; ~27% smaller). The
 finding — a genuine latent bug in stock OpenOS's `etc/rc.d/example.lua`
 (`print(args)` references an unbound global) — which is the kind of
 false-positive-free precision a scope-aware checker should have.
+
+The **formatter** (`afmt`/`aurora.lua.gen`) is fuzzed over the same corpus with
+the strongest possible check: for every file, `parse(format(src))` must be
+structurally identical to `parse(src)` (meaning preserved) and
+`format(format(src)) == format(src)` (idempotent). All 170 files pass both.
 
 ## 6. Distribution
 

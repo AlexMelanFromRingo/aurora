@@ -1,0 +1,21 @@
+NAME
+  afmt - format Lua source code
+
+SYNOPSIS
+  afmt [-w | -c] <file.lua> [...]
+
+DESCRIPTION
+  Reparses Lua source through Aurora's parser and regenerates it with consistent
+  two-space indentation, spaced operators and minimal parentheses. The transform
+  is meaning-preserving and idempotent.
+
+OPTIONS
+  -w
+    rewrite the file(s) in place (atomic write)
+  -c
+    check only: print unformatted files and exit non-zero if any differ
+
+EXAMPLES
+  afmt myprog.lua            print the formatted version
+  afmt -w *.lua              reformat files in place
+  afmt -c bin/foo.lua        CI-style check
