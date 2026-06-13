@@ -1,0 +1,19 @@
+NAME
+  adoc - generate Markdown API docs from Lua source
+
+SYNOPSIS
+  adoc <file.lua> [-o out.md] [--title NAME] [--all]
+
+DESCRIPTION
+  Parses a Lua file, finds its function definitions and pairs each with the
+  comment block immediately above it, emitting a Markdown reference. By default
+  only table members (the public API) are documented; --all includes locals.
+
+OPTIONS
+  -o FILE       write to FILE instead of stdout
+  --title NAME  document title (defaults to the file name)
+  --all         include private/local functions
+
+EXAMPLES
+  adoc /lib/json.lua
+  adoc mylib.lua -o docs/mylib.md --title "My Library"

@@ -4,17 +4,23 @@ All notable changes to Aurora are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/), and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [1.2.0] — 2026-06-13 — "Lyra"
 
 ### Added
 - **`afmt` + `aurora.lua.gen`**: an AST-based Lua code formatter (consistent
   indentation, spaced operators, minimal parentheses, preserved method syntax).
   Meaning-preserving and idempotent; fuzzed over all 170 stock + Aurora files
   (`parse(format(x)) == parse(x)` and `format(format(x)) == format(x)`).
+- **`adoc` + `aurora.doc`**: API documentation generator. Parses a file, pairs
+  each function with its leading comment block, and emits Markdown (public table
+  members by default, `--all` for locals). Used to generate `docs/API.md` for
+  Aurora's own libraries (`tools/gen-apidocs.lua`).
 
 ### Fixed
 - Lexer: a numeric literal no longer swallows a following sign without an
   exponent marker (e.g. `1+2` now lexes as three tokens, not the number "1+2").
+
+[1.2.0]: https://github.com/AlexMelanFromRingo/aurora/releases/tag/v1.2.0
 
 ## [1.1.0] — 2026-06-13 — "Vega"
 

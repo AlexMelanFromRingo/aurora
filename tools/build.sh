@@ -8,4 +8,5 @@ cd "$ROOT"
 LUA="${LUA:-lua5.3}"
 "$LUA" tools/gen-manifest.lua
 "$LUA" tools/build-registry.lua
+"$LUA" tools/gen-apidocs.lua
 echo "build: manifest + registry regenerated"

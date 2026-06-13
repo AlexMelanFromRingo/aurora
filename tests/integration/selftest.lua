@@ -101,6 +101,12 @@ check("formatter is meaning-preserving and idempotent", function()
   assertEq(gen.format(out), out, "format is idempotent")
 end)
 
+check("doc generator extracts public API", function()
+  local doc = require("aurora.doc")
+  local md = doc.markdown("-- greets\nfunction M.hi(name) end", {publicOnly = true})
+  assert(md:find("M.hi(name)", 1, true) and md:find("greets", 1, true))
+end)
+
 -- ---- things that need the real OpenOS environment --------------------------
 
 check("fsx atomic write to real fs", function()
