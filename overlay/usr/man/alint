@@ -2,8 +2,19 @@ NAME
   alint - lint Lua files
 
 SYNOPSIS
-  alint <file.lua> [more.lua ...]
+  alint [--fix] [--watch] <file.lua> [...]
 
 DESCRIPTION
-  Reports syntax errors (with line numbers) and warns about implicit globals
-  and trailing whitespace. Exit code: 0 clean, 1 warnings, 2 errors.
+  Reports syntax errors, undefined-name reads and unused locals (via Aurora's
+  AST analyzer) plus implicit globals and trailing whitespace (regex linter).
+  Exit code: 0 clean, 1 warnings, 2 errors.
+
+OPTIONS
+  --fix     auto-format the file in place, then report findings that still need
+            manual attention
+  --watch   re-lint whenever a file changes until interrupted (Ctrl-Alt-C)
+
+EXAMPLES
+  alint bin/foo.lua
+  alint --fix bin/foo.lua
+  alint --watch lib/*.lua

@@ -107,6 +107,17 @@ check("doc generator extracts public API", function()
   assert(md:find("M.hi(name)", 1, true) and md:find("greets", 1, true))
 end)
 
+check("watch detects content changes (real fs)", function()
+  local watch = require("aurora.watch")
+  local fsx = require("aurora.fsx")
+  local p = "/tmp/aurora_itest_watch"
+  fsx.writeAll(p, "a")
+  local s1 = watch.snapshot({p})
+  fsx.writeAll(p, "b")
+  assertEq(#watch.changed(s1, watch.snapshot({p})), 1, "edit detected")
+  require("filesystem").remove(p)
+end)
+
 -- ---- things that need the real OpenOS environment --------------------------
 
 check("fsx atomic write to real fs", function()
