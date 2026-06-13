@@ -1,5 +1,20 @@
 {
   "packages": {
+    "abase64": {
+      "description": "Base64 encode/decode (data-card accelerated, pure-Lua fallback)",
+      "versions": {
+        "0.1.0": {
+          "deps": [],
+          "files": [
+            {
+              "path": "/bin/abase64.lua",
+              "sha256": "ddebded52966397c580e2f3dc52c5076b65033d0823599b509b445edeb4cd05c",
+              "url": "packages/abase64/0.1.0/bin/abase64.lua"
+            }
+          ]
+        }
+      }
+    },
     "acowsay": {
       "description": "A tiny cowsay — prints an ASCII cow with your message",
       "versions": {
@@ -10,6 +25,36 @@
               "path": "/bin/acowsay.lua",
               "sha256": "b3522258818211f196baf0fd2ef81470a5b5581edfe1ff0f67319633e6c08cb4",
               "url": "packages/acowsay/0.1.0/bin/acowsay.lua"
+            }
+          ]
+        }
+      }
+    },
+    "ajson": {
+      "description": "Pretty-print and validate JSON files",
+      "versions": {
+        "0.1.0": {
+          "deps": [],
+          "files": [
+            {
+              "path": "/bin/ajson.lua",
+              "sha256": "4189f1f3b11147eb3d21e13a7086f07d9aff4b7b1f5a7e5697dfd7d73750ada6",
+              "url": "packages/ajson/0.1.0/bin/ajson.lua"
+            }
+          ]
+        }
+      }
+    },
+    "awatch": {
+      "description": "Run a command repeatedly and watch its output",
+      "versions": {
+        "0.1.0": {
+          "deps": [],
+          "files": [
+            {
+              "path": "/bin/awatch.lua",
+              "sha256": "3225f262303fde2a7b90010b755cee0cb9ad92f13b4619fc6203a1b97f06c55b",
+              "url": "packages/awatch/0.1.0/bin/awatch.lua"
             }
           ]
         }
