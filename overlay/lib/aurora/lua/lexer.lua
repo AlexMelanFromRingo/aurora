@@ -43,12 +43,20 @@ function lexer.tokenize(src, opts)
   opts = opts or {}
   local tokens = {}
   local i, n, line = 1, #src, 1
+  local tokenStart = 1   -- byte offset where the current token began
 
+  -- Each token records its byte span [pos, stop] in `src` so source-to-source
+  -- tools (the transpiler) can splice replacements without losing formatting,
+  -- strings or comments.
   local function push(type, value)
-    tokens[#tokens + 1] = {type = type, value = value, line = line}
+    tokens[#tokens + 1] = {
+      type = type, value = value, line = line,
+      pos = tokenStart, stop = tokenStart + #value - 1,
+    }
   end
 
   while i <= n do
+    tokenStart = i
     local c = src:sub(i, i)
 
     if c == "\n" then

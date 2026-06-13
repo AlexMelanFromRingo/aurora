@@ -16,11 +16,18 @@ end
 t.describe("lexer", function()
   t.it("tokenizes a basic statement", function()
     local toks = lexer.tokenize("local x = 1 + 2")
-    t.expect(toks[1]).toEqual({type = "keyword", value = "local", line = 1})
+    t.expect(toks[1].type).toEqual("keyword")
+    t.expect(toks[1].value).toEqual("local")
     t.expect(toks[2].type).toEqual("name")
     t.expect(toks[3].value).toEqual("=")
     t.expect(toks[4].type).toEqual("number")
     t.expect(toks[#toks].type).toEqual("eof")
+  end)
+  t.it("records byte spans for each token", function()
+    local toks = lexer.tokenize("local x")
+    t.expect(toks[1].pos).toEqual(1)
+    t.expect(toks[1].stop).toEqual(5)   -- "local"
+    t.expect(toks[2].pos).toEqual(7)    -- "x"
   end)
   t.it("handles long strings and comments", function()
     local toks = lexer.tokenize("--[[c]] x = [==[hi]==]", {comments = true})
@@ -69,30 +76,76 @@ end)
 
 -- ---- transpile -------------------------------------------------------------
 
-t.describe("transpile", function()
-  t.it("expands compound assignment", function()
-    t.expect(transpile.line("count += 1")).toEqual("count = count + (1)")
-    t.expect(transpile.line("  t[i] ..= \"x\"")).toEqual("  t[i] = t[i] .. (\"x\")")
-    t.expect(transpile.line("a.b.c //= 2")).toEqual("a.b.c = a.b.c // (2)")
+t.describe("transpile (token-based)", function()
+  t.it("expands a simple compound assignment", function()
+    t.expect(transpile.run("count += 1")).toEqual("count = count +(1)")
   end)
-  t.it("leaves ordinary lines untouched", function()
-    t.expect(transpile.line("local x = a == b")).toEqual("local x = a == b")
-    t.expect(transpile.line("if x <= 3 then")).toEqual("if x <= 3 then")
-    t.expect(transpile.line("y = -z")).toEqual("y = -z")
+  t.it("wraps the RHS to preserve precedence", function()
+    -- a += b or c must be a + (b or c), never (a+b) or c
+    local f = assert(load("local a=1\nlocal b,c=nil,9\n" ..
+      transpile.run("a += b or c") .. "\nreturn a"))
+    t.expect(f()).toEqual(10)
   end)
-  t.it("round-trips to correct behavior", function()
+  t.it("handles table/index/dotted lvalues", function()
+    local src = [==[
+local t = {n = 1, list = {10}}
+t.n += 4
+t.list[1] *= 2
+return t.n, t.list[1]]==]
+    local a, b = eval(transpile.run(src))
+    t.expect(a).toEqual(5)
+    t.expect(b).toEqual(20)
+  end)
+  t.it("supports all operators incl. ..= and bitwise", function()
+    local src = [[
+local s = "a"
+local x = 12
+s ..= "b"
+x //= 5
+x |= 1
+return s, x]]
+    local s, x = eval(transpile.run(src))
+    t.expect(s).toEqual("ab")
+    t.expect(x).toEqual(3)   -- (12//5)=2, 2|1=3
+  end)
+  t.it("never touches += inside strings or comments", function()
+    local out = transpile.run('local s = "x += y"  -- a += b\nreturn s')
+    t.expect(out).toContain('"x += y"')
+    t.expect(eval(out)).toEqual("x += y")
+  end)
+  t.it("handles a multiline RHS", function()
+    local src = "local x = 1\nx +=\n  2 +\n  3\nreturn x"
+    t.expect(eval(transpile.run(src))).toEqual(6)
+  end)
+  t.it("handles several compound statements (semicolon and adjacency)", function()
+    local a, b = eval("local a,b=1,1\n" ..
+      transpile.run("a += 2; b += 3") .. "\nreturn a, b")
+    t.expect(a).toEqual(3)
+    t.expect(b).toEqual(4)
+  end)
+  t.it("stops the RHS at a following statement with no separator", function()
+    -- `a += 1 b = a` : RHS is just `1`, then a new statement
+    local a, b = eval("local a,b=0,0\n" ..
+      transpile.run("a += 1 b = a") .. "\nreturn a, b")
+    t.expect(a).toEqual(1)
+    t.expect(b).toEqual(1)
+  end)
+  t.it("passes ordinary code through unchanged", function()
+    local src = "local x = a == b\nif x <= 3 then end\ny = -z\n"
+    t.expect(transpile.run(src)).toEqual(src)
+  end)
+  t.it("round-trips a loop body", function()
     local src = [[
 local s = 0
-local t = {}
-t.n = 1
+local t = {n = 1}
 for i = 1, 4 do
   s += i
   t.n *= 2
 end
 return s, t.n]]
     local a, b = eval(transpile.run(src))
-    t.expect(a).toEqual(10)   -- 1+2+3+4
-    t.expect(b).toEqual(16)   -- 1*2^4
+    t.expect(a).toEqual(10)
+    t.expect(b).toEqual(16)
   end)
 end)
 
