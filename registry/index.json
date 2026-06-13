@@ -30,6 +30,36 @@
         }
       }
     },
+    "ahash": {
+      "description": "Print sha256/crc32 checksums of files (data-card accelerated)",
+      "versions": {
+        "0.1.0": {
+          "deps": [],
+          "files": [
+            {
+              "path": "/bin/ahash.lua",
+              "sha256": "da6355e45ff02a788e758b70df3f2bbc5dff95350734be7d137b19c1a55a7218",
+              "url": "packages/ahash/0.1.0/bin/ahash.lua"
+            }
+          ]
+        }
+      }
+    },
+    "ahexdump": {
+      "description": "Canonical hex + ASCII dump of a file",
+      "versions": {
+        "0.1.0": {
+          "deps": [],
+          "files": [
+            {
+              "path": "/bin/ahexdump.lua",
+              "sha256": "b16917aab395e0fcbb235908eee96c8d78516b6045af49bc48983478a5e33a3b",
+              "url": "packages/ahexdump/0.1.0/bin/ahexdump.lua"
+            }
+          ]
+        }
+      }
+    },
     "ajson": {
       "description": "Pretty-print and validate JSON files",
       "versions": {
@@ -55,6 +85,21 @@
               "path": "/bin/awatch.lua",
               "sha256": "3225f262303fde2a7b90010b755cee0cb9ad92f13b4619fc6203a1b97f06c55b",
               "url": "packages/awatch/0.1.0/bin/awatch.lua"
+            }
+          ]
+        }
+      }
+    },
+    "awc": {
+      "description": "Count lines, words and bytes (wc)",
+      "versions": {
+        "0.1.0": {
+          "deps": [],
+          "files": [
+            {
+              "path": "/bin/awc.lua",
+              "sha256": "3430f50d7b608350e66d47ce17e14546bf6373cc1560ef25f057426605ec6a31",
+              "url": "packages/awc/0.1.0/bin/awc.lua"
             }
           ]
         }

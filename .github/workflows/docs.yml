@@ -1,0 +1,35 @@
+name: docs
+
+# Regenerate docs/API.md from the library sources whenever they change on main,
+# and commit it back so the published docs site stays current automatically.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "overlay/lib/**"
+      - "tools/gen-apidocs.lua"
+      - ".github/workflows/docs.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  apidocs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Lua 5.3
+        run: sudo apt-get update && sudo apt-get install -y lua5.3
+      - name: Regenerate API docs
+        run: lua5.3 tools/gen-apidocs.lua
+      - name: Commit if changed
+        run: |
+          if git diff --quiet -- docs/API.md; then
+            echo "API.md already up to date"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/API.md
+          git commit -m "docs: regenerate API.md [skip ci]"
+          git push

@@ -1,5 +1,11 @@
 # Aurora
 
+[![ci](https://github.com/AlexMelanFromRingo/aurora/actions/workflows/ci.yml/badge.svg)](https://github.com/AlexMelanFromRingo/aurora/actions/workflows/ci.yml)
+[![release](https://img.shields.io/github/v/release/AlexMelanFromRingo/aurora?sort=semver)](https://github.com/AlexMelanFromRingo/aurora/releases)
+[![license](https://img.shields.io/github/license/AlexMelanFromRingo/aurora)](LICENSE)
+![lua](https://img.shields.io/badge/Lua-5.3-blue)
+[![docs](https://img.shields.io/badge/docs-pages-brightgreen)](https://alexmelanfromringo.github.io/aurora/)
+
 **A modern, batteries-included overlay distribution for OpenComputers OpenOS.**
 
 Aurora takes a stock [OpenOS](https://ocdoc.cil.li/) install and layers on a real

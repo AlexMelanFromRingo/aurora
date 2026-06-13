@@ -27,9 +27,9 @@ jobs:
       - name: Verify generated artifacts are up to date
         run: |
           tools/build.sh
-          if ! git diff --quiet -- install/manifest.lua registry/index.json; then
-            echo "::error::manifest/registry are stale — run tools/build.sh and commit"
-            git --no-pager diff -- install/manifest.lua registry/index.json
+          if ! git diff --quiet -- install/manifest.lua registry/index.json docs/API.md; then
+            echo "::error::generated files are stale — run tools/build.sh and commit"
+            git --no-pager diff -- install/manifest.lua registry/index.json docs/API.md
             exit 1
           fi
 
