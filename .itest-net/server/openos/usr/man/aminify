@@ -1,0 +1,10 @@
+NAME
+  aminify - minify a Lua source file
+
+SYNOPSIS
+  aminify <in.lua> [out.lua]
+
+DESCRIPTION
+  Removes comments and unnecessary whitespace using a Lua-aware tokenizer, so
+  the output is semantically identical to the input. With no output file the
+  result is printed to stdout.

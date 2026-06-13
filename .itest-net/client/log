@@ -1,0 +1,32 @@
+config [client]: table: {
+  ["components"]={
+    {"screen","a58b9479-05fa-4430-927d-4d269cc7455b",},
+    {"gpu","afdadc8a-7d28-4551-bb0d-417c1cc691e0",44800,},
+    {"eeprom","64dcf220-5f75-4e8d-a895-e29efc3c2c8e",4096,256,"OC-BIOS",},
+    {"computer","f83d72fc-bd41-4728-ae8a-b7d5239f3a3a",2097152,},
+    {"filesystem","20c9a62c-e1ea-41a3-b7a4-5b04c23dbff0","/home/young-developer/University/OpenOSLab/aurora/.itest-net/client/openos","openos",},
+    {"filesystem","aabbccdd-0000-0000-0000-000000000099",false,"data",},
+    {"filesystem","3344634b-d385-48dd-bb11-8b219e7a99d8",true,"tmpfs",},
+    {"keyboard","fdbd6546-7858-7336-5191-eff6d47a68d0","a58b9479-05fa-4430-927d-4d269cc7455b",},
+    {"modem","5e54e000-0000-0000-0000-000000000002",56000,8192,8,},
+  },
+  ["system"]={["allowBytecode"]=false,["allowGC"]=false,["maxTcpConnections"]=4,["timeout"]=5,},
+}
+
+screen: ready
+gpu: ready
+eeprom: ready
+computer: ready
+filesystem: ready
+filesystem: ready
+filesystem: ready
+keyboard: ready
+modem: ready
+components loaded: 9
+machine thread created
+machine function loaded
+components post initialized
+lua env baseline: 281233
+BEEP
+lua env closed
+computer peek memory: 1225607

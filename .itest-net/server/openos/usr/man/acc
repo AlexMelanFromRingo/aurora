@@ -1,0 +1,10 @@
+NAME
+  acc - the Aurora compiler/build tool
+
+SYNOPSIS
+  acc <entry.lua> -o <out.lua> [--no-transpile] [--no-minify] [--strict]
+
+DESCRIPTION
+  Pipelines a project through transpile -> lint -> bundle -> minify, producing
+  one runnable file. --strict fails the build on lint warnings; by default only
+  errors fail.

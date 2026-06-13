@@ -1,0 +1,18 @@
+NAME
+  awget - safe file downloader
+
+SYNOPSIS
+  awget [-f] [-q] [--sha256=HEX] <url> [file]
+
+DESCRIPTION
+  Like wget, but checks the HTTP status (a 404 body is an error, not your
+  file), writes atomically (temp then rename), and can verify integrity.
+
+OPTIONS
+  -f            overwrite an existing file
+  -q            quiet (no progress)
+  --sha256=HEX  verify the download against a sha256 digest
+
+EXAMPLES
+  awget https://example.com/p.lua /usr/bin/p.lua
+  awget --sha256=ab12... https://host/file.bin file.bin

@@ -121,5 +121,8 @@ GitHub.
 - **The minifier does not rename locals.** Comment/whitespace removal is the
   bulk of the win and is provably safe; renaming risks correctness for a few
   extra bytes.
-- **LAN/RPC transport is in-VM-only tested** (a single emulated node can't talk
-  to a peer); the wire protocol and RPC envelopes are pure and unit-tested.
+- **LAN/RPC is validated across two real VMs.** `tools/integration-net.sh` boots
+  a server and a client OpenOS+Aurora instance that share a modem network (ocvm
+  bridges modems over a localhost socket hub) and performs a genuine JSON-RPC
+  call between them. The wire protocol and RPC envelopes are additionally pure
+  unit-tested.

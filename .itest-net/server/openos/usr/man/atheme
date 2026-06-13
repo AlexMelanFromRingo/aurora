@@ -1,0 +1,10 @@
+NAME
+  atheme - manage Aurora shell color themes
+
+SYNOPSIS
+  atheme [list | set <name>]
+
+DESCRIPTION
+  Lists or applies named themes (default, dark, mono, matrix). A theme sets the
+  prompt (PS1) and LS_COLORS. The chosen theme is remembered across reboots and
+  re-applied at login.

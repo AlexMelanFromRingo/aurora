@@ -1,0 +1,11 @@
+NAME
+  abundle - link a multi-module Lua project into one file
+
+SYNOPSIS
+  abundle <entry.lua> <out.lua> [--minify]
+
+DESCRIPTION
+  Statically resolves require() calls, embeds every local module into
+  package.preload and appends the entry chunk. Modules it cannot find locally
+  (e.g. component, filesystem) stay as runtime requires. --minify shrinks the
+  result with aminify.

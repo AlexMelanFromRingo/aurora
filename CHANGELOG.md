@@ -13,6 +13,9 @@ All notable changes to Aurora are documented here. The format follows
   undefined names (typos) and unused locals. Wired into `alint`. Across the whole
   corpus it surfaces exactly one real latent bug (`etc/rc.d/example.lua`).
 - New opm packages: `ajson`, `abase64`, `awatch`.
+- **Multi-node networking test** (`tools/integration-net.sh`): boots two
+  OpenOS+Aurora VMs sharing a modem network and performs a real JSON-RPC call
+  between them — proving `anet` works node-to-node, not just in unit tests.
 
 ### Changed
 - `aurora.transpile` rewritten on the lexer (token-based): handles multiline

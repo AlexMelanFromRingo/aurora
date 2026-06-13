@@ -1,0 +1,30 @@
+NAME
+  opm - Aurora package manager
+
+SYNOPSIS
+  opm <command> [args]
+
+DESCRIPTION
+  Installs, removes and updates packages from GitHub-hosted registries. Each
+  package file is verified against a sha256 checksum and written atomically.
+
+COMMANDS
+  update                 refresh package lists from the configured sources
+  search <query>         search available packages
+  info <name>            show details about a package
+  install <name[@ver]>   install packages and their dependencies
+  remove <name>          uninstall packages (refuses if depended upon)
+  list                   list installed packages
+  upgrade                upgrade all installed packages
+
+OPTIONS
+  -f, --force            reinstall/remove even when not strictly needed
+  --fresh                bypass the cache and re-fetch indexes
+
+FILES
+  /etc/opm/sources.lua          registry sources
+  /etc/opm/installed/<pkg>.json local package manifests
+
+EXAMPLES
+  opm update && opm install acowsay
+  opm remove acowsay

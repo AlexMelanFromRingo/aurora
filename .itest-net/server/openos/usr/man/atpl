@@ -1,0 +1,10 @@
+NAME
+  atpl - transpile Aurora sugar to plain Lua
+
+SYNOPSIS
+  atpl <in.lua> [out.lua]
+
+DESCRIPTION
+  Adds compound assignment operators (+= -= *= /= //= %= ^= ..= &= |= <<= >>=).
+  Line-oriented: the left-hand side is duplicated, so index expressions with
+  side effects are evaluated twice. Plain Lua files pass through unchanged.

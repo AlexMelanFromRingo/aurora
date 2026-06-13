@@ -1,0 +1,10 @@
+NAME
+  arepl - improved interactive Lua prompt
+
+SYNOPSIS
+  arepl
+
+DESCRIPTION
+  A REPL with multiline input, results pretty-printed via inspect, a `=expr`
+  shorthand to print values, and a persistent environment. Type exit or send
+  EOF (Ctrl-D) to quit.
