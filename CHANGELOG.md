@@ -4,7 +4,7 @@ All notable changes to Aurora are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/), and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [1.3.0] — 2026-06-13 — "Sirius"
 
 ### Added
 - **`alint --fix`**: auto-formats a file in place (via the AST formatter), then
@@ -12,6 +12,9 @@ All notable changes to Aurora are documented here. The format follows
 - **`--watch` mode** for `afmt` and `alint`: re-run on every file change, backed
   by a new `aurora.watch` library (content-hash change detection; pure core
   unit-tested).
+- Project documentation site published via GitHub Pages (`docs/`).
+
+[1.3.0]: https://github.com/AlexMelanFromRingo/aurora/releases/tag/v1.3.0
 
 ## [1.2.0] — 2026-06-13 — "Lyra"
 
