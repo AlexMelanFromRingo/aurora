@@ -25,7 +25,7 @@ core patches), so there is nothing to re-learn and nothing to lose.
 | 🧰 **Libraries** | `json`, `inspect`, `class`, `argparse`, `aurora.hash` (SHA-256/CRC-32), `aurora.semver`, `aurora.fsx`, `aurora.util`, `aurora.optimize` |
 
 Every shipped Lua file is syntax-linted, every pure module is unit-tested on the
-host (**122 tests**), and the whole distribution is booted and self-tested inside
+host (**112 tests**), and the whole distribution is booted and self-tested inside
 a real OpenOS under an emulator (**15 in-VM checks**, including the data card's
 hardware SHA-256).
 

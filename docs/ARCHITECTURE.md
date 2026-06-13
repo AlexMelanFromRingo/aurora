@@ -79,8 +79,8 @@ Three layers, all driven by `tools/test.sh`:
 
 | Layer | Mechanism | Covers |
 |-------|-----------|--------|
-| **Lint** | `luac5.3 -p` over every shipped + test file | syntax of all 50+ files |
-| **Unit** | host `lua5.3` + `tests/shim/oc.lua` | every pure module — 122 tests, incl. round-trip exec for minify/transpile/bundle and SHA-256/CRC-32 vectors |
+| **Lint** | `luac5.3 -p` over every shipped + test file | syntax of all 61 shipped + test files |
+| **Unit** | host `lua5.3` + `tests/shim/oc.lua` | every pure module — 112 tests, incl. round-trip exec for minify/transpile/bundle and SHA-256/CRC-32 vectors |
 | **Integration** | boot stock OpenOS + Aurora under `ocvm` (`script` PTY), run `tests/integration/selftest.lua`, read `/selftest.log` | 15 checks against the *real* OpenOS environment (hardware sha256, real `component.list`, real `filesystem`/`os.setenv`) |
 
 The OpenComputers **host shim** (`tests/shim/oc.lua`) provides `checkArg`,
