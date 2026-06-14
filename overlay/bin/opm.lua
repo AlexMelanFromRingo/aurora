@@ -26,6 +26,8 @@ local function usage()
   remove <name>…         uninstall packages
   list                   list installed packages
   upgrade                upgrade all installed packages
+  freeze [-o FILE]       write a lockfile of installed packages (stdout if no -o)
+  restore <FILE>         install the exact packages from a lockfile
 
 Flags: -f/--force  --fresh (bypass cache)
 ]])
@@ -73,6 +75,22 @@ elseif cmd == "info" then
 
 elseif cmd == "upgrade" then
   local ok, err = opm.upgrade(opts)
+  if not ok then fail(err) end
+
+elseif cmd == "freeze" then
+  local lock = opm.freezeJSON()
+  if options.o and options.o ~= true then
+    assert(require("aurora.fsx").atomicWrite(shell.resolve(options.o), lock .. "\n"))
+    io.write("wrote lockfile to " .. options.o .. "\n")
+  else
+    io.write(lock .. "\n")
+  end
+
+elseif cmd == "restore" then
+  if #args == 0 then fail("restore needs a lockfile path") end
+  local data = require("aurora.fsx").readAll(shell.resolve(args[1]))
+  if not data then fail("cannot read " .. args[1]) end
+  local ok, err = opm.restore(data, opts)
   if not ok then fail(err) end
 
 elseif cmd == "help" or cmd == nil or options.h or options.help then

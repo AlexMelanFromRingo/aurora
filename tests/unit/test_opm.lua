@@ -148,4 +148,62 @@ t.describe("opm install/remove flow", function()
   end)
 end)
 
+t.describe("opm freeze/restore", function()
+  local root = "/tmp/opm_freeze_" .. tostring(os.time())
+  local body = "return 1\n"
+  local sum = hash.sha256(body)
+  local target = root .. "/lib/x.lua"
+  local synthetic = {packages = {
+    xpkg = {description = "x", versions = {["1.0.0"] =
+      {deps = {}, files = {{path = target, abs = "http://reg/x.lua", sha256 = sum}}}}},
+  }}
+  local function activate()
+    registry.build = function() return synthetic end
+    db.root = root .. "/etc/opm"
+    shim.clear()
+    shim.set("internet", {request = function()
+      local sent = false
+      return {finishConnect = function() return true end,
+              response = function() return 200, "OK", {} end,
+              read = function() if not sent then sent = true; return body end end,
+              close = function() end}
+    end})
+  end
+
+  t.it("freezes installed packages to a lockfile", function()
+    activate()
+    os.execute("rm -rf '" .. root .. "'")
+    db.record({name = "a", version = "1.2.3", files = {}})
+    db.record({name = "b", version = "0.1.0", files = {}})
+    local lock = opm.freeze()
+    t.expect(lock.aurora_lock).toEqual(1)
+    t.expect(#lock.packages).toEqual(2)
+    t.expect(opm.freezeJSON()).toContain("aurora_lock")
+  end)
+
+  t.it("restores exact versions from a lockfile", function()
+    activate()
+    os.execute("rm -rf '" .. root .. "'")
+    local ok = opm.restore({aurora_lock = 1, packages = {{name = "xpkg", version = "1.0.0"}}},
+      {out = function() end})
+    t.expect(ok).toBeTruthy()
+    t.expect(db.get("xpkg").version).toEqual("1.0.0")
+    os.execute("rm -rf '" .. root .. "'")
+  end)
+
+  t.it("round-trips freeze -> JSON -> restore", function()
+    activate()
+    local json = require("json")
+    local lock = {aurora_lock = 1, packages = {{name = "xpkg", version = "1.0.0"}}}
+    local ok = opm.restore(json.encode(lock), {out = function() end})
+    t.expect(ok).toBeTruthy()
+    os.execute("rm -rf '" .. root .. "'")
+  end)
+
+  t.it("rejects malformed lockfiles", function()
+    t.expect(select(2, opm.restore("not json{", {}))).toContain("invalid lockfile")
+    t.expect(select(2, opm.restore({foo = 1}, {}))).toContain("not an Aurora lockfile")
+  end)
+end)
+
 os.exit((t.run({quiet = true})))

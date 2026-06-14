@@ -16,6 +16,8 @@ COMMANDS
   remove <name>          uninstall packages (refuses if depended upon)
   list                   list installed packages
   upgrade                upgrade all installed packages
+  freeze [-o FILE]       write a lockfile of installed packages (pins versions)
+  restore <FILE>         install the exact packages from a lockfile
 
 OPTIONS
   -f, --force            reinstall/remove even when not strictly needed
@@ -28,3 +30,5 @@ FILES
 EXAMPLES
   opm update && opm install acowsay
   opm remove acowsay
+  opm freeze -o packages.lock      # snapshot the current package set
+  opm restore packages.lock        # reproduce it on another machine

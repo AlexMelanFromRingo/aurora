@@ -4,6 +4,13 @@ All notable changes to Aurora are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/), and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+- **`opm freeze` / `opm restore`**: snapshot the installed package set to a
+  version-pinned lockfile and reproduce it elsewhere (`opm.freeze`,
+  `opm.freezeJSON`, `opm.restore`).
+
 ## [1.4.0] — 2026-06-14 — "Capella"
 
 ### Added

@@ -153,6 +153,19 @@ check("opm db records to real fs", function()
   assertEq(db.get("demo").version, "1.2.3")
 end)
 
+check("opm freeze snapshots installed packages", function()
+  local opm = require("aurora.opm")
+  opm.db.root = "/tmp/aurora_itest_freeze"
+  opm.db.record({name = "demo", version = "9.9.9", files = {}})
+  local lock = opm.freeze()
+  assert(lock.aurora_lock == 1)
+  local found = false
+  for _, p in ipairs(lock.packages) do
+    if p.name == "demo" and p.version == "9.9.9" then found = true end
+  end
+  assert(found, "freeze must include the installed package")
+end)
+
 check("sysinfo collects real components", function()
   local sysinfo = require("aurora.sysinfo")
   local info = sysinfo.collect({

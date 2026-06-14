@@ -6,6 +6,7 @@ local resolver = require("aurora.opm.resolver")
 local db = require("aurora.opm.db")
 local semver = require("aurora.semver")
 local fsx = require("aurora.fsx")
+local json = require("json")
 
 local opm = {}
 opm.registry = registry
@@ -170,6 +171,42 @@ function opm.upgrade(opts)
     end
   end
   if #specs == 0 then w(out, "Everything is up to date.\n"); return true end
+  return opm.install(specs, opts)
+end
+
+-- freeze() -> lockfile table {aurora_lock=1, packages={{name=, version=}, ...}}
+-- A snapshot of exactly what is installed, for reproducing the same set later.
+function opm.freeze()
+  local pkgs = {}
+  for _, item in ipairs(db.list()) do
+    pkgs[#pkgs + 1] = {name = item.name, version = item.version}
+  end
+  return {aurora_lock = 1, packages = pkgs}
+end
+
+-- freezeJSON() -> pretty JSON string of the lockfile
+function opm.freezeJSON()
+  return json.encode(opm.freeze(), {pretty = true})
+end
+
+-- restore(lock, opts) -> install every package at its pinned version.
+-- `lock` may be a table (from freeze) or a JSON string.
+function opm.restore(lock, opts)
+  if type(lock) == "string" then
+    local ok, decoded = pcall(json.decode, lock)
+    if not ok then return nil, "invalid lockfile JSON" end
+    lock = decoded
+  end
+  if type(lock) ~= "table" or type(lock.packages) ~= "table" then
+    return nil, "not an Aurora lockfile"
+  end
+  local specs = {}
+  for _, p in ipairs(lock.packages) do
+    if p.name and p.version then
+      specs[#specs + 1] = p.name .. "@" .. p.version   -- exact version pin
+    end
+  end
+  if #specs == 0 then return true end
   return opm.install(specs, opts)
 end
 
