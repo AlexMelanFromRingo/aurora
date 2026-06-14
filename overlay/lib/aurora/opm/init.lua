@@ -210,4 +210,38 @@ function opm.restore(lock, opts)
   return opm.install(specs, opts)
 end
 
+-- outdated(opts) -> array of {name, current, latest} for installed packages that
+-- have a newer version in the registry (read-only; does not install anything).
+function opm.outdated(opts)
+  local reg = registry.build({fresh = opts and opts.fresh})
+  local out = {}
+  for _, item in ipairs(db.list()) do
+    local pkg = reg.packages[item.name]
+    if pkg then
+      local versions = {}
+      for v in pairs(pkg.versions) do versions[#versions + 1] = v end
+      local best = semver.max(versions)
+      if best and semver.compare(best, item.version) > 0 then
+        out[#out + 1] = {name = item.name, current = item.version, latest = best}
+      end
+    end
+  end
+  table.sort(out, function(a, b) return a.name < b.name end)
+  return out
+end
+
+-- why(name) -> array of {name, constraint} : installed packages that declare a
+-- dependency on `name` (explains why it is present).
+function opm.why(name)
+  local out = {}
+  for _, item in ipairs(db.list()) do
+    local m = db.get(item.name)
+    if m and m.deps and m.deps[name] then
+      out[#out + 1] = {name = item.name, constraint = m.deps[name]}
+    end
+  end
+  table.sort(out, function(a, b) return a.name < b.name end)
+  return out
+end
+
 return opm

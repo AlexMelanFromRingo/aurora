@@ -25,6 +25,8 @@ local function usage()
   install <name[@ver]>…  install packages and dependencies
   remove <name>…         uninstall packages
   list                   list installed packages
+  outdated               list installed packages that have a newer version
+  why <name>             show which installed packages depend on <name>
   upgrade                upgrade all installed packages
   freeze [-o FILE]       write a lockfile of installed packages (stdout if no -o)
   restore <FILE>         install the exact packages from a lockfile
@@ -76,6 +78,25 @@ elseif cmd == "info" then
 elseif cmd == "upgrade" then
   local ok, err = opm.upgrade(opts)
   if not ok then fail(err) end
+
+elseif cmd == "outdated" then
+  local list = opm.outdated(opts)
+  if #list == 0 then io.write("All packages are up to date.\n") end
+  for _, it in ipairs(list) do
+    io.write(string.format("%-24s %s -> %s\n", it.name, it.current, it.latest))
+  end
+
+elseif cmd == "why" then
+  if #args == 0 then fail("why needs a package name") end
+  local list = opm.why(args[1])
+  if #list == 0 then
+    io.write(args[1] .. " is not required by any installed package.\n")
+  else
+    io.write(args[1] .. " is required by:\n")
+    for _, it in ipairs(list) do
+      io.write("  " .. it.name .. " (" .. tostring(it.constraint) .. ")\n")
+    end
+  end
 
 elseif cmd == "freeze" then
   local lock = opm.freezeJSON()

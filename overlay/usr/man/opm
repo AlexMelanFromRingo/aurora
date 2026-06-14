@@ -15,6 +15,8 @@ COMMANDS
   install <name[@ver]>   install packages and their dependencies
   remove <name>          uninstall packages (refuses if depended upon)
   list                   list installed packages
+  outdated               list installed packages that have a newer version
+  why <name>             show which installed packages depend on <name>
   upgrade                upgrade all installed packages
   freeze [-o FILE]       write a lockfile of installed packages (pins versions)
   restore <FILE>         install the exact packages from a lockfile

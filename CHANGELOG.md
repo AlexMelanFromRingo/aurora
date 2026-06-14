@@ -4,12 +4,17 @@ All notable changes to Aurora are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/), and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [1.5.0] — 2026-06-14 — "Rigel"
 
 ### Added
 - **`opm freeze` / `opm restore`**: snapshot the installed package set to a
   version-pinned lockfile and reproduce it elsewhere (`opm.freeze`,
   `opm.freezeJSON`, `opm.restore`).
+- **`opm outdated`**: list installed packages that have a newer version available
+  (read-only, no install).
+- **`opm why <name>`**: show which installed packages depend on a package.
+
+[1.5.0]: https://github.com/AlexMelanFromRingo/aurora/releases/tag/v1.5.0
 
 ## [1.4.0] — 2026-06-14 — "Capella"
 

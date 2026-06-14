@@ -206,4 +206,42 @@ t.describe("opm freeze/restore", function()
   end)
 end)
 
+t.describe("opm outdated/why", function()
+  local root = "/tmp/opm_oq_" .. tostring(os.time())
+  local twoVersions = {packages = {demo = {versions = {["1.0.0"] = {}, ["2.0.0"] = {}}}}}
+
+  t.it("lists packages with a newer version available", function()
+    db.root = root
+    os.execute("rm -rf '" .. root .. "'")
+    db.record({name = "demo", version = "1.0.0", files = {}})
+    registry.build = function() return twoVersions end
+    local list = opm.outdated()
+    t.expect(#list).toEqual(1)
+    t.expect(list[1].name).toEqual("demo")
+    t.expect(list[1].current).toEqual("1.0.0")
+    t.expect(list[1].latest).toEqual("2.0.0")
+  end)
+
+  t.it("reports nothing when everything is current", function()
+    db.root = root
+    os.execute("rm -rf '" .. root .. "'")
+    db.record({name = "demo", version = "2.0.0", files = {}})
+    registry.build = function() return twoVersions end
+    t.expect(opm.outdated()).toEqual({})
+  end)
+
+  t.it("explains reverse dependencies (why)", function()
+    db.root = root
+    os.execute("rm -rf '" .. root .. "'")
+    db.record({name = "app", version = "1.0.0", deps = {lib = "^1.0.0"}, files = {}})
+    db.record({name = "lib", version = "1.0.0", deps = {}, files = {}})
+    local why = opm.why("lib")
+    t.expect(#why).toEqual(1)
+    t.expect(why[1].name).toEqual("app")
+    t.expect(why[1].constraint).toEqual("^1.0.0")
+    t.expect(opm.why("nobody")).toEqual({})
+    os.execute("rm -rf '" .. root .. "'")
+  end)
+end)
+
 os.exit((t.run({quiet = true})))
