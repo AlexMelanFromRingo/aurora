@@ -4,7 +4,7 @@ All notable changes to Aurora are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/), and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [1.4.0] — 2026-06-14 — "Capella"
 
 ### Added
 - **`aurora.lang` + `alocale`**: i18n with key→string catalogs per locale
@@ -21,6 +21,8 @@ All notable changes to Aurora are documented here. The format follows
 ### Fixed
 - API docs: escape `|` so GitHub Pages (kramdown) no longer splits description
   lines like `… -> a | b` into a broken table.
+
+[1.4.0]: https://github.com/AlexMelanFromRingo/aurora/releases/tag/v1.4.0
 
 ## [1.3.0] — 2026-06-13 — "Sirius"
 
