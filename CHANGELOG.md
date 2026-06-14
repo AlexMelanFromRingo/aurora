@@ -7,6 +7,10 @@ All notable changes to Aurora are documented here. The format follows
 ## [Unreleased]
 
 ### Added
+- **`aurora.lang` + `alocale`**: i18n with key→string catalogs per locale
+  (`/etc/locale/<code>.lua`, English fallback, `{named}` placeholders). Ships
+  English + Russian; `afetch` labels are localized. Language is remembered across
+  reboots and applied at login.
 - **`aurora.sandbox` + `asandbox`**: run untrusted Lua with no access to io, the
   filesystem, component/computer, require or load — only the pure stdlib (plus a
   caller-injected `print` in the CLI). Optional step limit aborts runaway loops.

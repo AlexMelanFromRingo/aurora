@@ -12,7 +12,16 @@ do
   end
 end
 
--- 2) convenient aliases (do not clobber user-defined ones)
+-- 2) load message catalogs and apply the remembered language
+do
+  local ok, lang = pcall(require, "aurora.lang")
+  if ok then
+    pcall(lang.loadDir, "/etc/locale")
+    pcall(lang.applyPersisted)
+  end
+end
+
+-- 3) convenient aliases (do not clobber user-defined ones)
 local aliases = {
   ll = "ls -lhp",
   la = "ls -ap",

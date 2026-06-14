@@ -1,0 +1,15 @@
+NAME
+  alocale - show or change the Aurora interface language
+
+SYNOPSIS
+  alocale [list | set <code>]
+
+DESCRIPTION
+  Manages the locale used for Aurora's localized messages (e.g. afetch labels).
+  Catalogs live in /etc/locale/<code>.lua; English is the fallback. The chosen
+  language is remembered across reboots and applied at login.
+
+EXAMPLES
+  alocale            show the current language
+  alocale list       list available languages
+  alocale set ru     switch to Russian

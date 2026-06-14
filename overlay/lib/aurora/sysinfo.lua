@@ -44,22 +44,24 @@ local LOGO = {
   "  \27[36m\\/\27[m   ",
 }
 
--- render(info, opts) -> array of lines
+-- render(info, opts) -> array of lines. opts.labels may localize the row labels:
+-- {os=, uptime=, memory=, address=, hardware=}; English defaults otherwise.
 function sysinfo.render(info, opts)
   opts = opts or {}
+  local L = opts.labels or {}
   local rows = {
-    {"OS", info.os},
-    {"Uptime", fmtUptime(info.uptime)},
-    {"Memory", string.format("%s / %s used",
+    {L.os or "OS", info.os},
+    {L.uptime or "Uptime", fmtUptime(info.uptime)},
+    {L.memory or "Memory", string.format("%s / %s used",
       util.humanBytes(info.usedMem), util.humanBytes(info.totalMem))},
-    {"Address", (info.address or ""):sub(1, 8)},
+    {L.address or "Address", (info.address or ""):sub(1, 8)},
   }
   -- components summary
   local parts = {}
   local names = util.keys(info.components)
   table.sort(names)
   for _, n in ipairs(names) do parts[#parts + 1] = n .. "×" .. info.components[n] end
-  rows[#rows + 1] = {"Hardware", table.concat(parts, " ")}
+  rows[#rows + 1] = {L.hardware or "Hardware", table.concat(parts, " ")}
 
   local lines = {}
   local maxRows = math.max(#LOGO, #rows)

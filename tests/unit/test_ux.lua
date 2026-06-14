@@ -81,6 +81,14 @@ t.describe("sysinfo", function()
     t.expect(blob).toContain("1h 2m")        -- 3725s
     t.expect(blob).toContain("512.0K / 1.0M")
   end)
+  t.it("uses localized labels when provided", function()
+    local lines = sysinfo.render(sysinfo.collect(fakeEnv),
+      {labels = {os = "ОС", memory = "Память"}})
+    local blob = table.concat(lines, "\n")
+    t.expect(blob).toContain("ОС")
+    t.expect(blob).toContain("Память")
+    t.expect(blob).toContain("Hardware")     -- unspecified label keeps default
+  end)
 end)
 
 os.exit((t.run({quiet = true})))
